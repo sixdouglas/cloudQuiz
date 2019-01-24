@@ -1,0 +1,29 @@
+server:
+  port: 6060
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:6040
+  application:
+    name: FRONT
+  thymeleaf:
+    check-template: false
+    reactive:
+      max-chunk-size: 8192
+      chunked-mode-view-names: thymeleaf/*chunked*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+api:
+  baseUrl: http://localhost:6050
+#logging:
+#  level:
+#    org.thymeleaf.spring5.SpringWebFluxTemplateEngine: TRACE

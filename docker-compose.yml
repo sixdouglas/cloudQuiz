@@ -1,0 +1,96 @@
+version: '3.2'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: quiz-mongodb
+    restart: on-failure
+    ports:
+      - 6070:27017
+    volumes:
+      - ./data/mongo:/data/db
+    networks:
+      - db-network
+    environment:
+      MONGO_INITDB_DATABASE: quiz-database
+
+  mongo-express:
+    image: mongo-express
+    container_name: quiz-mongo-express
+    restart: on-failure
+    ports:
+      - 6080:8081
+    networks:
+      - db-network
+    depends_on:
+      - mongodb
+    environment:
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_SERVER: quiz-mongodb
+
+  config:
+    image: quiz/config:latest
+    container_name: quiz-config
+    ports:
+      - 6030:6030
+    networks:
+      - boot-network
+    restart:
+      on-failure
+    environment:
+      - DELAY_SLEEP=0 # no need to wait to start this container
+
+  admin:
+    image: quiz/admin:latest
+    container_name: quiz-admin
+    ports:
+      - 6040:6040
+    networks:
+      - boot-network
+    restart:
+      on-failure
+    depends_on:
+      - config
+    environment:
+      - SPRING_PROFILES_ACTIVE=compose
+      - CONFIG_SERVER_URL=http://quiz-config:6030/
+      - DELAY_SLEEP=10 # gives time for the config app to start before this application
+
+  api:
+    image: quiz/api:latest
+    container_name: quiz-api
+    ports:
+      - 6050:6050
+    networks:
+      - db-network
+      - boot-network
+    restart:
+      on-failure
+    depends_on:
+      - mongodb
+      - config
+    environment:
+      - SPRING_PROFILES_ACTIVE=compose
+      - CONFIG_SERVER_URL=http://quiz-config:6030/
+      - DELAY_SLEEP=10 # gives time for the config app and database to start before this application
+
+  front:
+    image: quiz/front:latest
+    container_name: quiz-front
+    ports:
+      - 6060:6060
+    networks:
+      - boot-network
+    restart:
+      on-failure
+    depends_on:
+      - api
+      - config
+    environment:
+      - SPRING_PROFILES_ACTIVE=compose
+      - CONFIG_SERVER_URL=http://quiz-config:6030/
+      - DELAY_SLEEP=10 # gives time for the config app and api app to start before this application
+
+networks:
+  db-network: {}
+  boot-network: {}

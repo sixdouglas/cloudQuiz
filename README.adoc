@@ -1,0 +1,17 @@
+= Quiz APP
+
+This is a multi-module app composed of the following nodes :
+
+* Config (listening on the **6030** port)
+* Admin (listening on the **6040** port)
+* API (listening on the **6050** port)
+* Front (listening on the **6060** port)
+* MongoDB (listening on the **6070** port)
+* Mongo Express (listening on the **6080** port)
+
+The application is really simple since it just display the content of a table.
+This table is just filled with some Quiz and their questions.
+Once up you can view the list of the Quizzes at this URL:
+
+http://localhost:6060/[http://localhost:6060/]
+

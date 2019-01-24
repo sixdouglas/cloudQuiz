@@ -1,0 +1,27 @@
+server:
+  port: 6050
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:6040
+  application:
+    name: API
+  data:
+    mongodb:
+      database: quiz-database
+      host: localhost
+      port: 6070
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+front:
+  corsUrl: http://localhost:6060

@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:6030}
+  application:
+    name: FRONT
+  profiles:
+    active: #spring.profiles.active#

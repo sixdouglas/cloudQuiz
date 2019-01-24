@@ -1,0 +1,10 @@
+server:
+  port: 6040
+
+spring:
+  boot:
+    kubernetes:
+      discovery:
+        enabled: false
+  application:
+    name: GUARDIAN-ADMIN

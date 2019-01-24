@@ -1,0 +1,9 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: http://quiz-admin:6040
+  data:
+    mongodb:
+      host: quiz-mongodb
+      port: 27017

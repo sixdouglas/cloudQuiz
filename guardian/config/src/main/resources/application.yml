@@ -1,0 +1,30 @@
+server:
+  port: 6030
+
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+            - 'classpath:/config'
+            - 'classpath:/config/{application}'
+            - 'classpath:/config/{application}/{profile}'
+  boot:
+    admin:
+      client:
+        url: http://quiz-admin:6040
+
+  application:
+    name: GUARDIAN-CONF
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

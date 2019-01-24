@@ -1,0 +1,8 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: http://quiz-admin:6040
+
+api:
+  baseUrl: http://quiz-api:6050
